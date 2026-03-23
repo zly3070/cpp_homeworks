@@ -1,0 +1,85 @@
+第2题-const
+6.
+101 78.5
+101 80.5
+
+7.
+（1）
+修改含义：
+将stud申明为常对象，常函数不能调用非常函数，故编译出错，
+运行出错。
+（2）
+对应语句修改为：
+mutable int num;
+mutable float score;
+void change(int n, float s) const{}
+void display() const{}
+修改含义：
+修改change和display函数为常函数，使stud常对象能调用这些函数，
+并且定义num和score为mutable变量，即允许通过常对象调用常函数
+修改被mutable修饰的成员变量。
+编译通过。
+运行结果为：
+101 78.5
+101 80.5
+（3）
+修改含义：
+定义指针p指向对象stud，并通过指针调用成员函数进行修改和展示。
+运行结果为：
+101 78.5
+101 80.5
+（4）
+修改含义：
+定义p为指向常对象的指针，通过p不能访问非常成员函数，故编译
+出错，运行出错。
+（5）
+修改含义：
+定义p为指向非常对象的常指针，不能修改其指向的地址，但可以修改
+其指向的对象。
+故编译通过。
+运行结果：
+101 78.5
+101 80.5
+
+8.
+修改后：
+#include <iostream>
+using namespace std;
+
+class Student{
+	public:
+		Student(int n, float s):num(n), score(s){}
+		void change(int n, float s) {
+			num = n;
+			score = s;
+		}
+		void display() {
+			cout << num << " " << score << endl;
+		}
+	private:
+		int num;
+		float score;
+};
+
+void fun(Student& tmp){
+			tmp.display();
+			tmp.change(101, 80.5);
+			tmp.display();
+		}
+
+int main(){
+	Student stud(101, 78.5);
+	fun(stud);
+	return 0;
+}
+运行结果：
+101 78.5
+101 80.5
+
+
+第3题-静态对象
+9.
+代码：9_sale.cpp
+
+
+
