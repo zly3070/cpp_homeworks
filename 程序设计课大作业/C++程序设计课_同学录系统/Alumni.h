@@ -7,34 +7,34 @@ class Alumni{
 		void display();
 
 		void setName();
-		string getName(){return name;}
+		string getName() const {return name;}
 		
 		void setGender();
-		char getGender(){return Gender;}
+		char getGender() const {return gender;}
 		
 		void setAge();
-		unsigned getAge(){return age;}
+		unsigned getAge() const {return age;}
 		
 		void setBatch();
-		unsigned getBatch(){return batch;}
+		unsigned getBatch() const {return batch;}
 		
 		void setDepartment();
-		string getDepartment(){return department;}
+		string getDepartment() const {return department;}
 		
 		void setClassName();
-		string getClassName(){return classname;}
+		string getClassName() const {return className;}
 		
 		void setAddr();
-		string getAddr(){return addr;}
+		string getAddr() const {return addr;}
 		
 		void setNum();
-		string getNum(){return num;}
+		string getNum() const {return num;}
 		
 		void setQq();
-		string getQq(){return qq;}
+		string getQq() const {return qq;}
 		
 		void setEmail();
-		string getEmail(){return eml;}
+		string getEmail() const {return eml;}
 
 	private:
 		string name;
@@ -74,9 +74,9 @@ void Alumni::setName(){
 
 void Alumni::setGender(){
 	char tmp = gender;
-	cout << "Original gender: " << (gender=='m' ? "male":"female") << ", " << "change to --> ";
+	cout << "Original gender: " << (gender=='m' ? "male":"female") << ", " << "change to(m/f) --> ";
 	cin >> gender;
-	cout << "Successfully changed the gender from " << tmp << " to " << gender << endl; 
+	cout << "Successfully changed the gender from " << (tmp=='m' ? "male":"female") << " to " << (gender=='m' ? "male":"female") << endl; 
 }
 
 void Alumni::setAge(){
@@ -148,12 +148,157 @@ Alumni inputAlumni(){
                   className, addr, num, qq, email);
 }
 
-void sortAlumniList(vector<ALumni>& list){
+void sortAlumniList(vector<Alumni>& list){
 	sort(list.begin(), list.end(), [](const Alumni& a, const Alumni& b){
 		if (a.getBatch()==b.getBatch()){
 			return a.getName() < b.getName();
 		} else{
-			return a.getBatch() < getBatch();
+			return a.getBatch() < b.getBatch();
 		}
-	})
+	});
 }
+
+void loadTestData(vector<Alumni> &list){  // 加载测试数据脚本
+	list.push_back(Alumni("张三", 'm', 22, 2024, "计算机系", "计科1班", "杭州", "13800000001", "10001", "zhangsan@test.com"));
+    list.push_back(Alumni("李四", 'f', 21, 2025, "计算机系", "计科2班", "宁波", "13800000002", "10002", "lisi@test.com"));
+    list.push_back(Alumni("王五", 'm', 23, 2023, "计算机系", "计科1班", "温州", "13800000003", "10003", "wangwu@test.com"));
+    list.push_back(Alumni("赵六", 'm', 22, 2024, "软件学院", "软工1班", "绍兴", "13800000004", "10004", "zhaoliu@test.com"));
+    list.push_back(Alumni("孙七", 'f', 24, 2022, "软件学院", "软工2班", "嘉兴", "13800000005", "10005", "sunqi@test.com"));
+
+    cout << "【调试模式】已加载 " << list.size() << " 条测试数据\n";
+}
+
+void setAlumni(vector<Alumni>& list){
+	int index;
+	cout << "请输入要修改的校友编号：";
+	cin >> index;
+	if (index < 1 || index > list.size()){ // 检测编号有效性
+		cout << "编号无效！\n";
+		return;
+	}
+	Alumni* p2Alumni = &list[index-1];
+	int field;
+    cout << "\n选择要修改的字段:\n";
+    cout << "1. 姓名\n";
+    cout << "2. 性别\n";
+    cout << "3. 年龄\n";
+    cout << "4. 届级\n";
+    cout << "5. 系\n";
+    cout << "6. 班级\n";
+    cout << "7. 通讯地址\n";
+    cout << "8. 电话\n";
+    cout << "9. QQ\n";
+    cout << "10. 邮箱\n";
+    cout << "请输入选择: ";
+    cin >> field;
+	switch(field){
+		case 1: p2Alumni->setName(); break;
+		case 2: p2Alumni->setGender(); break;
+		case 3: p2Alumni->setAge(); break;
+		case 4: p2Alumni->setBatch(); break;
+		case 5: p2Alumni->setDepartment(); break;
+		case 6: p2Alumni->setClassName(); break;
+		case 7: p2Alumni->setAddr(); break;
+		case 8: p2Alumni->setNum(); break;
+		case 9: p2Alumni->setQq(); break;
+		case 10: p2Alumni->setEmail(); break;
+		default: cout << "无效输入！\n"; break;
+	}
+}
+
+void deleteAlumni(vector<Alumni>& list){
+	int index;
+	cout << "请输入要删除的校友编号：\n";
+	cin >> index;
+
+	if (index < 1 || index > list.size()){
+		cout << "编号无效！\n";
+		return;
+	}
+	cout << "\n即将删除以下校友信息：" << endl;
+    list[index - 1].display();
+    
+    char confirm;
+    cout << "\n确认删除？(y/n): ";
+    cin >> confirm;
+    
+    if (confirm == 'y' || confirm == 'Y') {
+        list.erase(list.begin() + (index - 1));
+        cout << "删除成功！" << endl;
+    } else {
+        cout << "已取消删除。" << endl;
+	}
+}
+
+void queryAlumni(vector<Alumni>& list){
+	cin.ignore();
+    cout << "输入关键词，空格分隔多个关键词\n";
+    cout << "请输入: ";
+	string input;
+	getline(cin, input);
+
+	vector<string> keywords;
+	stringstream ss(input);
+	string word;
+	while(ss >> word){
+		keywords.push_back(word);	
+	}
+	// cout << "当前keywords.size()=" << keywords.size() << endl;
+	if (keywords.empty()){
+		cout << "未检测到有效关键词！\n";
+		return;
+	}
+
+	vector<pair<int, Alumni>> results;  // pair<match, Alumni>
+	for (const auto& a : list){
+		int match = 0;
+		for (const auto& kw : keywords){ // kw 关键词  find(something)!=string::npos 有匹配到该关键词 
+			if ((a.getName().find(kw)) != string::npos) match += 1;
+			if (a.getGender() == kw[0]) match += 1;
+			if (to_string(a.getAge()) == kw) match += 1;
+			if (to_string(a.getBatch()) == kw) match += 1;
+			if ((a.getDepartment().find(kw)) != string::npos) match += 1;
+			if ((a.getClassName().find(kw)) != string::npos) match += 1;
+			if ((a.getAddr().find(kw)) != string::npos) match += 1;
+			if ((a.getNum().find(kw)) != string::npos) match += 1;
+			if ((a.getQq().find(kw)) != string::npos) match += 1;
+			if ((a.getEmail().find(kw)) != string::npos) match += 1;
+		}
+		if (!match) continue; // 若一个关键词都匹配不上，则跳过当前循环，尝试匹配下一位校友
+		// cout << "当前" << a.getName() << "校友的match：" << match << endl;
+		if (match > (int)keywords.size()-2){ // .size()返回的是size_t类型的，负数会溢出，变为很大的正数
+			results.push_back(make_pair(match, a));
+		}
+	}
+	
+	stable_sort(results.begin(), results.end(), // 使用stable_sort保留原始排序特性
+		[](const pair<int, Alumni>& x, const pair<int, Alumni>& y){
+			return x.first > y.first;
+		});
+
+	if (results.empty()){
+			cout << "未找到匹配的校友！\n";
+			return;
+		} else {
+			cout << "找到" << results.size() << "位匹配的校友：\n\n";
+			for (size_t i = 0; i < results.size(); i++){
+				cout << "--- 结果" << i + 1 << "---\n";
+				results[i].second.display();
+				cout << endl;
+			}
+		}
+}
+/*
+cout << "\n选择要修改的字段:\n";
+    cout << "1. 姓名\n";
+    cout << "2. 性别\n";
+    cout << "3. 年龄\n";
+    cout << "4. 届级\n";
+    cout << "5. 系\n";
+    cout << "6. 班级\n";
+    cout << "7. 通讯地址\n";
+    cout << "8. 电话\n";
+    cout << "9. QQ\n";
+    cout << "10. 邮箱\n";
+    cout << "请输入选择: ";
+*/
