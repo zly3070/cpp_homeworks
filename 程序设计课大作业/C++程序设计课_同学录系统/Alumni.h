@@ -288,6 +288,40 @@ void queryAlumni(vector<Alumni>& list){
 			}
 		}
 }
+
+void saveToFile(const vector<Alumni>& list, const string& filename){  // 向文件中写入队列
+	ofstream out(filename);
+	if (!out){
+		cerr << "警告：无法打开文件" << filename << "进行保存\n";
+		return;
+	}
+	
+	for (const auto& a : list){
+		// 写入时用"|"作为分隔符
+		out << a.getName() << "|"
+            << a.getGender() << "|"
+            << a.getAge() << "|"
+            << a.getBatch() << "|"
+            << a.getDepartment() << "|"
+            << a.getClassName() << "|"
+            << a.getAddr() << "|"
+            << a.getNum() << "|"
+            << a.getQq() << "|"
+            << a.getEmail() << "\n";
+
+	}
+}
+
+void loadFromFile(vector<Alumni>& list, const string& filename){  // main起初时，从文件中读取数据
+	ifstream in(filename);
+	if (!in){
+		return;  //初次运行时没有文件，故直接退出无妨
+	}
+	list.clear();
+	string line;
+	
+}
+
 /*
 cout << "\n选择要修改的字段:\n";
     cout << "1. 姓名\n";

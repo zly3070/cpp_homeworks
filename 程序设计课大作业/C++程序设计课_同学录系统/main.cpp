@@ -13,6 +13,8 @@ int main(){
 	int choice = -1;
 
 	loadTestData(alumniList); // 载入测试数据 
+
+	loadFromFile(alumniList, "alumni_data.txt"); // 从文件读取校友类列表
 	
 	do{
 		sortAlumniList(alumniList);
@@ -77,7 +79,9 @@ int main(){
 		}
 	}while(choice != 0);
 	cout << "退出系统...\n";
-	return 0;
+	saveToFile(alumniList, "alumni_data.txt");
+	return 0;‘
+	
 /*
 	Alumni alumni1("Zhang", 'm', 25, 2026, "化工", "化工1班", "Hangzhou", "18258193070", "2049990576", "2049990576@qq.com");
 	alumni1.display();
