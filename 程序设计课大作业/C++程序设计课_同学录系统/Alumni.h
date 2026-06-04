@@ -317,8 +317,30 @@ void loadFromFile(vector<Alumni>& list, const string& filename){  // main起初�
 	if (!in){
 		return;  //初次运行时没有文件，故直接退出无妨
 	}
-	list.clear();
+	list.clear();  // 一开始清空校友类列表
 	string line;
+	while(getline(in, line)){
+		stringstream ss(line);
+		string name, genderStr, ageStr, batchStr, department, className, addr, num, qq, email;
+        
+		getline(ss, name, '|');
+        getline(ss, genderStr, '|');
+        getline(ss, ageStr, '|');
+        getline(ss, batchStr, '|');
+        getline(ss, department, '|');
+        getline(ss, className, '|');
+        getline(ss, addr, '|');
+        getline(ss, num, '|');
+        getline(ss, qq, '|');
+        getline(ss, email, '|');
+		
+		char gender = genderStr.empty() ? 'm' : genderStr[0];
+        unsigned int age = stoi(ageStr);
+        unsigned int batch = stoi(batchStr);
+		
+		list.push_back(Alumni(name, gender, age, batch, department, 
+                              className, addr, num, qq, email));
+	}
 	
 }
 

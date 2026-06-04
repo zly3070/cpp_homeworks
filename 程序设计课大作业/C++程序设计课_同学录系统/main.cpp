@@ -12,10 +12,11 @@ int main(){
 	vector<Alumni> alumniList; // 存储所有校友
 	int choice = -1;
 
-	loadTestData(alumniList); // 载入测试数据 
+	loadFromFile(alumniList, "data.txt"); // 从文件读取校友类列表
+	if (alumniList.empty()){
+		loadTestData(alumniList);
+	}
 
-	loadFromFile(alumniList, "alumni_data.txt"); // 从文件读取校友类列表
-	
 	do{
 		sortAlumniList(alumniList);
 		cout << "\n===校友录管理系统===\n";
@@ -27,7 +28,7 @@ int main(){
 		cout << "0.退出系统\n";
 		cout << "请选择：";
 		
-		if (!(cin >> choice)) {
+		if (!(cin >> choice)) {	
     		cout << "检测到无效字符！\n";
     		cin.clear();                 // 清除错误标志
     		cin.ignore(1024, '\n');     // 丢掉错误的输入
@@ -78,9 +79,9 @@ int main(){
 			break;
 		}
 	}while(choice != 0);
+	saveToFile(alumniList, "data.txt");
 	cout << "退出系统...\n";
-	saveToFile(alumniList, "alumni_data.txt");
-	return 0;‘
+	return 0;
 	
 /*
 	Alumni alumni1("Zhang", 'm', 25, 2026, "化工", "化工1班", "Hangzhou", "18258193070", "2049990576", "2049990576@qq.com");

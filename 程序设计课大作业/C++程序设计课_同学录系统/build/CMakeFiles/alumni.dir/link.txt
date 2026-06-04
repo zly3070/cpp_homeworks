@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/alumni.dir/link.d CMakeFiles/alumni.dir/main.cpp.o -o alumni  /usr/lib/libftxui-screen.a /usr/lib/libftxui-dom.a /usr/lib/libftxui-component.a /usr/lib/libftxui-dom.a /usr/lib/libftxui-screen.a
