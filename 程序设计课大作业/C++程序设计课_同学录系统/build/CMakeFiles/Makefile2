@@ -63,11 +63,11 @@ CMAKE_BINARY_DIR = /run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/alumni.dir/all
+all: CMakeFiles/try.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
-codegen: CMakeFiles/alumni.dir/codegen
+codegen: CMakeFiles/try.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -75,40 +75,40 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/alumni.dir/clean
+clean: CMakeFiles/try.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/alumni.dir
+# Target rules for target CMakeFiles/try.dir
 
 # All Build rule for target.
-CMakeFiles/alumni.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/alumni.dir/build.make CMakeFiles/alumni.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/alumni.dir/build.make CMakeFiles/alumni.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/C++程序设计课_同学录系统/build/CMakeFiles --progress-num=1,2 "Built target alumni"
-.PHONY : CMakeFiles/alumni.dir/all
+CMakeFiles/try.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/try.dir/build.make CMakeFiles/try.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/try.dir/build.make CMakeFiles/try.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/C++程序设计课_同学录系统/build/CMakeFiles --progress-num=1,2 "Built target try"
+.PHONY : CMakeFiles/try.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/alumni.dir/rule: cmake_check_build_system
+CMakeFiles/try.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/C++程序设计课_同学录系统/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/alumni.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/try.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/C++程序设计课_同学录系统/build/CMakeFiles 0
-.PHONY : CMakeFiles/alumni.dir/rule
+.PHONY : CMakeFiles/try.dir/rule
 
 # Convenience name for target.
-alumni: CMakeFiles/alumni.dir/rule
-.PHONY : alumni
+try: CMakeFiles/try.dir/rule
+.PHONY : try
 
 # codegen rule for target.
-CMakeFiles/alumni.dir/codegen:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/alumni.dir/build.make CMakeFiles/alumni.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/C++程序设计课_同学录系统/build/CMakeFiles --progress-num=1,2 "Finished codegen for target alumni"
-.PHONY : CMakeFiles/alumni.dir/codegen
+CMakeFiles/try.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/try.dir/build.make CMakeFiles/try.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/C++程序设计课_同学录系统/build/CMakeFiles --progress-num=1,2 "Finished codegen for target try"
+.PHONY : CMakeFiles/try.dir/codegen
 
 # clean rule for target.
-CMakeFiles/alumni.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/alumni.dir/build.make CMakeFiles/alumni.dir/clean
-.PHONY : CMakeFiles/alumni.dir/clean
+CMakeFiles/try.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/try.dir/build.make CMakeFiles/try.dir/clean
+.PHONY : CMakeFiles/try.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

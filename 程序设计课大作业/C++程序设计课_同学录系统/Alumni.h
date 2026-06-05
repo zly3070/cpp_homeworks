@@ -162,8 +162,10 @@ void loadTestData(vector<Alumni> &list){  // 加载测试数据脚本
 	list.push_back(Alumni("张三", 'm', 22, 2024, "计算机系", "计科1班", "杭州", "13800000001", "10001", "zhangsan@test.com"));
     list.push_back(Alumni("李四", 'f', 21, 2025, "计算机系", "计科2班", "宁波", "13800000002", "10002", "lisi@test.com"));
     list.push_back(Alumni("王五", 'm', 23, 2023, "计算机系", "计科1班", "温州", "13800000003", "10003", "wangwu@test.com"));
-    list.push_back(Alumni("赵六", 'm', 22, 2024, "软件学院", "软工1班", "绍兴", "13800000004", "10004", "zhaoliu@test.com"));
-    list.push_back(Alumni("孙七", 'f', 24, 2022, "软件学院", "软工2班", "嘉兴", "13800000005", "10005", "sunqi@test.com"));
+    list.push_back(Alumni("赵六", 'm', 22, 2024, "计算机系", "软工1班", "绍兴", "13800000004", "10004", "zhaoliu@test.com"));
+    list.push_back(Alumni("孙七", 'f', 24, 2022, "计算机系", "软工2班", "嘉兴", "13800000005", "10005", "sunqi@test.com"));
+	list.push_back(Alumni("勾八", 'm', 26, 2020, "计算机系", "软工2班", "富阳", "13800000006", "10006", "gouba@test.com"));
+	list.push_back(Alumni("牢九", 'm', 24, 2022, "计算机系", "软工3班", "舟山", "13800000007", "10007", "牢九@test.com"));
 
     cout << "【调试模式】已加载 " << list.size() << " 条测试数据\n";
 }
