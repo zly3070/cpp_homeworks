@@ -14,6 +14,11 @@ int main() {
 
     // 数据
     bool show_dialog = false;
+    std::string new_name, new_department, new_class,
+        new_addr, new_num, new_qq, new_email;
+    char new_gender = 'm';
+    unsigned int new_age = 0, new_batch = 0;
+    
     std::string search_keyword;
 
     std::vector<Alumni> alumniList;
