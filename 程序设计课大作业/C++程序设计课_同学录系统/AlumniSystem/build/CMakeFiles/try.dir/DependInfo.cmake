@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/C++程序设计课_同学录系统/main.cpp" "CMakeFiles/alumni.dir/main.cpp.o" "gcc" "CMakeFiles/alumni.dir/main.cpp.o.d"
-  "" "alumni" "gcc" "CMakeFiles/alumni.dir/link.d"
+  "/run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/C++程序设计课_同学录系统/AlumniSystem/try.cpp" "CMakeFiles/try.dir/try.cpp.o" "gcc" "CMakeFiles/try.dir/try.cpp.o.d"
+  "" "try" "gcc" "CMakeFiles/try.dir/link.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

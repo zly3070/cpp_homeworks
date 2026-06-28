@@ -7,7 +7,7 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/C++程序设计课_同学录系统/CMakeLists.txt"
+  "/run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/C++程序设计课_同学录系统/AlumniSystem/CMakeLists.txt"
   "CMakeFiles/4.3.4/CMakeCCompiler.cmake"
   "CMakeFiles/4.3.4/CMakeCXXCompiler.cmake"
   "CMakeFiles/4.3.4/CMakeSystem.cmake"

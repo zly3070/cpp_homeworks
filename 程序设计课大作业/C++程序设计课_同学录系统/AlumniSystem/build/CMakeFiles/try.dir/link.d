@@ -1,8 +1,8 @@
-alumni: \
+try: \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/../../../../lib/Scrt1.o \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/../../../../lib/crti.o \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/crtbeginS.o \
-  CMakeFiles/alumni.dir/main.cpp.o \
+  CMakeFiles/try.dir/try.cpp.o \
   /usr/lib/libftxui-screen.a \
   /usr/lib/libftxui-dom.a \
   /usr/lib/libftxui-component.a \
@@ -46,7 +46,7 @@ alumni: \
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/crtbeginS.o:
 
-CMakeFiles/alumni.dir/main.cpp.o:
+CMakeFiles/try.dir/try.cpp.o:
 
 /usr/lib/libftxui-screen.a:
 
