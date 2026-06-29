@@ -1,0 +1,29 @@
+{
+  "label": "Compile with FTXUI",
+  "type": "shell",
+  "command": "g++",
+  "args": [
+    "-std=c++17",
+    "-g",
+    "try.cpp",
+    "-o",
+    "try.exe",
+    "-I",
+    "C:/path/to/ftxui/include", // FTXUI头文件路径
+    "-L",
+    "C:/path/to/ftxui/lib", // FTXUI库路径
+    "-lftxui-screen",
+    "-lftxui-dom",
+    "-lftxui-component",
+    "-lws2_32", // Windows需要的网络库
+    "-lwinmm" // Windows多媒体库
+  ],
+  "group": {
+    "kind": "build",
+    "isDefault": true
+  },
+  "problemMatcher": [
+    "$gcc"
+  ]
+}
+

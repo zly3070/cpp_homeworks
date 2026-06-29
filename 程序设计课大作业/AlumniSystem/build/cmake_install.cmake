@@ -1,4 +1,4 @@
-# Install script for directory: /run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/C++程序设计课_同学录系统/AlumniSystem
+# Install script for directory: /run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/AlumniSystem
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,7 +45,7 @@ endif()
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/C++程序设计课_同学录系统/AlumniSystem/build/install_local_manifest.txt"
+  file(WRITE "/run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/AlumniSystem/build/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()
 if(CMAKE_INSTALL_COMPONENT)
@@ -61,6 +61,6 @@ else()
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/C++程序设计课_同学录系统/AlumniSystem/build/${CMAKE_INSTALL_MANIFEST}"
+  file(WRITE "/run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/AlumniSystem/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
+
 class Alumni{
 	public:
 		Alumni(string, char, unsigned int, unsigned int, string, string, string, string, string, string);
@@ -48,6 +50,122 @@ class Alumni{
 		string qq;
 		string eml;
 };
+
+// ========== 自定义单链表 ==========
+struct AlumniNode {
+    Alumni data;
+    AlumniNode* next;
+    AlumniNode(const Alumni& a) : data(a), next(nullptr) {}
+};
+
+class AlumniList {
+private:
+    AlumniNode* head;
+    int count;
+
+public:
+    AlumniList() : head(nullptr), count(0) {}
+
+    ~AlumniList() { clear(); }
+
+    // 禁止拷贝（避免浅拷贝导致的重复释放）
+    AlumniList(const AlumniList&) = delete;
+    AlumniList& operator=(const AlumniList&) = delete;
+
+    int size() const { return count; }
+    bool empty() const { return count == 0; }
+
+    void clear() {
+        while (head) {
+            AlumniNode* tmp = head;
+            head = head->next;
+            delete tmp;
+        }
+        count = 0;
+    }
+
+    // 尾部插入
+    void push_back(const Alumni& a) {
+        AlumniNode* node = new AlumniNode(a);
+        if (!head) {
+            head = node;
+        } else {
+            AlumniNode* cur = head;
+            while (cur->next) cur = cur->next;
+            cur->next = node;
+        }
+        count++;
+    }
+
+    // 按下标取节点（用于 UI 渲染、编辑）
+    Alumni& at(int index) {
+        AlumniNode* cur = head;
+        for (int i = 0; i < index && cur; i++) cur = cur->next;
+        return cur->data;
+    }
+    const Alumni& at(int index) const {
+        AlumniNode* cur = head;
+        for (int i = 0; i < index && cur; i++) cur = cur->next;
+        return cur->data;
+    }
+
+    // 按下标删除
+    void erase(int index) {
+        if (index < 0 || index >= count) return;
+        if (index == 0) {
+            AlumniNode* tmp = head;
+            head = head->next;
+            delete tmp;
+        } else {
+            AlumniNode* prev = head;
+            for (int i = 0; i < index - 1; i++) prev = prev->next;
+            AlumniNode* tmp = prev->next;
+            prev->next = tmp->next;
+            delete tmp;
+        }
+        count--;
+    }
+
+    // 按下标修改
+    void set(int index, const Alumni& a) {
+        if (index < 0 || index >= count) return;
+        at(index) = a;
+    }
+
+    // 插入排序：按 batch，再按 name（链表上做重排）
+    void sort() {
+        if (!head || !head->next) return;
+        // 简单做法：拆下所有节点重新有序插入
+        AlumniNode* sorted = nullptr;
+        AlumniNode* cur = head;
+        while (cur) {
+            AlumniNode* next = cur->next;
+            // 找插入位置
+            if (!sorted || lessThan(cur->data, sorted->data)) {
+                cur->next = sorted;
+                sorted = cur;
+            } else {
+                AlumniNode* p = sorted;
+                while (p->next && !lessThan(cur->data, p->next->data))
+                    p = p->next;
+                cur->next = p->next;
+                p->next = cur;
+            }
+            cur = next;
+        }
+        head = sorted;
+    }
+
+private:
+    static bool lessThan(const Alumni& a, const Alumni& b) {
+        if (a.getBatch() == b.getBatch())
+            return a.getName() < b.getName();
+        return a.getBatch() < b.getBatch();
+    }
+};
+
+
+
 
 Alumni::Alumni(string n, char g, unsigned int a, unsigned int b, string d, string c, string address, string number, string qqNumber, string email):
 	name(n), gender(g), age(a), batch(b), department(d), className(c), addr(address), num(number), qq(qqNumber), eml(email) {}
@@ -148,17 +266,57 @@ Alumni inputAlumni(){
                   className, addr, num, qq, email);
 }
 
-void sortAlumniList(vector<Alumni>& list){
-	sort(list.begin(), list.end(), [](const Alumni& a, const Alumni& b){
-		if (a.getBatch()==b.getBatch()){
-			return a.getName() < b.getName();
-		} else{
-			return a.getBatch() < b.getBatch();
-		}
-	});
+void sortAlumniList(AlumniList& list){
+    list.sort();
 }
 
-void loadTestData(vector<Alumni> &list){  // 加载测试数据脚本
+// ========== 数据合法性校验 ==========
+// 返回空字符串表示合法，否则返回错误描述
+string validateAlumniInput(
+    const string& name, const string& genderStr,
+    const string& ageStr, const string& batchStr,
+    const string& num, const string& qq, const string& email)
+{
+    // 姓名非空
+    if (name.empty()) return "姓名不能为空";
+
+    // 性别只能是 m 或 f
+    if (genderStr.empty() ||
+        (genderStr[0] != 'm' && genderStr[0] != 'f'))
+        return "性别只能是 m 或 f";
+
+    // 年龄：纯数字且在合理范围
+    if (ageStr.empty()) return "年龄不能为空";
+    for (char c : ageStr) if (!isdigit((unsigned char)c)) return "年龄必须是数字";
+    int age = stoi(ageStr);
+    if (age <= 0 || age > 150) return "年龄需在 1~150 之间";
+
+    // 届级：纯数字 4 位年份
+    if (batchStr.empty()) return "届级不能为空";
+    for (char c : batchStr) if (!isdigit((unsigned char)c)) return "届级必须是数字";
+    int batch = stoi(batchStr);
+    if (batch < 1900 || batch > 2100) return "届级需为合理年份(1900~2100)";
+
+    // 电话：11 位数字
+    if (!num.empty()) {
+        if (num.size() != 11) return "电话需为 11 位";
+        for (char c : num) if (!isdigit((unsigned char)c)) return "电话必须是数字";
+    }
+
+    // QQ：纯数字
+    if (!qq.empty())
+        for (char c : qq) if (!isdigit((unsigned char)c)) return "QQ必须是数字";
+
+    // 邮箱：必须含 @ 和 .
+    if (!email.empty()) {
+        if (email.find('@') == string::npos || email.find('.') == string::npos)
+            return "邮箱格式不正确";
+    }
+
+    return "";  // 全部通过
+}
+
+void loadTestData(AlumniList &list){  // 加载测试数据脚本
 	list.push_back(Alumni("张三", 'm', 22, 2024, "计算机系", "计科1班", "杭州", "13800000001", "10001", "zhangsan@test.com"));
     list.push_back(Alumni("李四", 'f', 21, 2025, "计算机系", "计科2班", "宁波", "13800000002", "10002", "lisi@test.com"));
     list.push_back(Alumni("王五", 'm', 23, 2023, "计算机系", "计科1班", "温州", "13800000003", "10003", "wangwu@test.com"));
@@ -291,16 +449,15 @@ void queryAlumni(vector<Alumni>& list){
 		}
 }
 
-void saveToFile(const vector<Alumni>& list, const string& filename){  // 向文件中写入队列
-	ofstream out(filename);
-	if (!out){
-		cerr << "警告：无法打开文件" << filename << "进行保存\n";
-		return;
-	}
-	
-	for (const auto& a : list){
-		// 写入时用"|"作为分隔符
-		out << a.getName() << "|"
+void saveToFile(const AlumniList& list, const string& filename){
+    ofstream out(filename);
+    if (!out){
+        cerr << "警告：无法打开文件" << filename << "进行保存\n";
+        return;
+    }
+    for (int i = 0; i < list.size(); i++){
+        const Alumni& a = list.at(i);
+        out << a.getName() << "|"
             << a.getGender() << "|"
             << a.getAge() << "|"
             << a.getBatch() << "|"
@@ -310,22 +467,19 @@ void saveToFile(const vector<Alumni>& list, const string& filename){  // 向文�
             << a.getNum() << "|"
             << a.getQq() << "|"
             << a.getEmail() << "\n";
-
-	}
+    }
 }
 
-void loadFromFile(vector<Alumni>& list, const string& filename){  // main起初时，从文件中读取数据
-	ifstream in(filename);
-	if (!in){
-		return;  //初次运行时没有文件，故直接退出无妨
-	}
-	list.clear();  // 一开始清空校友类列表
-	string line;
-	while(getline(in, line)){
-		stringstream ss(line);
-		string name, genderStr, ageStr, batchStr, department, className, addr, num, qq, email;
-        
-		getline(ss, name, '|');
+void loadFromFile(AlumniList& list, const string& filename){
+    ifstream in(filename);
+    if (!in) return;
+    list.clear();
+    string line;
+    while(getline(in, line)){
+        if (line.empty()) continue;
+        stringstream ss(line);
+        string name, genderStr, ageStr, batchStr, department, className, addr, num, qq, email;
+        getline(ss, name, '|');
         getline(ss, genderStr, '|');
         getline(ss, ageStr, '|');
         getline(ss, batchStr, '|');
@@ -335,15 +489,14 @@ void loadFromFile(vector<Alumni>& list, const string& filename){  // main起初�
         getline(ss, num, '|');
         getline(ss, qq, '|');
         getline(ss, email, '|');
-		
-		char gender = genderStr.empty() ? 'm' : genderStr[0];
-        unsigned int age = stoi(ageStr);
-        unsigned int batch = stoi(batchStr);
-		
-		list.push_back(Alumni(name, gender, age, batch, department, 
+
+        char gender = genderStr.empty() ? 'm' : genderStr[0];
+        unsigned int age = ageStr.empty() ? 0 : stoi(ageStr);
+        unsigned int batch = batchStr.empty() ? 0 : stoi(batchStr);
+
+        list.push_back(Alumni(name, gender, age, batch, department,
                               className, addr, num, qq, email));
-	}
-	
+    }
 }
 
 /*

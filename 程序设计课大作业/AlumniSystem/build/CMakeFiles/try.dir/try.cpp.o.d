@@ -1,5 +1,5 @@
 CMakeFiles/try.dir/try.cpp.o: \
- /run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/C++程序设计课_同学录系统/AlumniSystem/try.cpp \
+ /run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/AlumniSystem/try.cpp \
  /usr/include/stdc-predef.h /usr/include/ftxui/component/component.hpp \
  /usr/include/c++/16.1.1/functional \
  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -231,7 +231,7 @@ CMakeFiles/try.dir/try.cpp.o: \
  /usr/include/ftxui/component/event.hpp \
  /usr/include/ftxui/component/mouse.hpp \
  /usr/include/ftxui/component/task.hpp \
- /run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/C++程序设计课_同学录系统/AlumniSystem/Alumni.h \
+ /run/media/zly3070/OS/Users/asus/Desktop/cpp_homeworks/程序设计课大作业/AlumniSystem/Alumni.h \
  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/stdc++.h \
  /usr/include/c++/16.1.1/cfloat \
  /usr/lib/gcc/x86_64-pc-linux-gnu/16.1.1/include/float.h \

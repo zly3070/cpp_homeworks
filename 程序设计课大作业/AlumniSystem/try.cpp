@@ -37,7 +37,7 @@ bool matchAlumni(const Alumni& a, const std::string& keyword) {
 int main() {
     auto screen = ScreenInteractive::Fullscreen();
 
-    std::vector<Alumni> alumniList;
+    AlumniList alumniList;                    // ★ 自定义链表
     // 从文件读取，不再用 loadTestData
     loadFromFile(alumniList, DATA_FILE);
     if (alumniList.empty()) {        // 文件为空时加载测试数据
@@ -55,12 +55,13 @@ int main() {
         new_addr, new_num, new_qq, new_email,
         new_gender_str, new_age_str, new_batch_str;
     std::string search_keyword;
+    std::string error_msg;                    // ★ 校验错误提示
 
     auto getVisibleIndices = [&]() -> std::vector<int> {
         std::vector<int> indices;
-        for (size_t i = 0; i < alumniList.size(); i++) {
-            if (matchAlumni(alumniList[i], search_keyword)) {
-                indices.push_back((int)i);
+        for (int i = 0; i < alumniList.size(); i++) {        // ★ size() 返回 int
+            if (matchAlumni(alumniList.at(i), search_keyword)) {  // ★ at(i)
+                indices.push_back(i);
             }
         }
         return indices;
@@ -69,6 +70,7 @@ int main() {
     // ---------- 工具栏 ----------
     auto new_button = Button("New", [&] {
         is_edit_mode = false;
+        error_msg.clear();                    // ★ 清空提示
         show_dialog = true;
     });
     auto search_input = Input(&search_keyword, "Search...");
@@ -106,15 +108,23 @@ int main() {
     };
 
     auto confirm_btn = Button("确认", [&] {
-        char gender = new_gender_str.empty() ? 'm' : new_gender_str[0];
-        unsigned int age = new_age_str.empty() ? 0 : std::stoi(new_age_str);
-        unsigned int batch = new_batch_str.empty() ? 0 : std::stoi(new_batch_str);
+        // ★ 先做合法性校验
+        error_msg = validateAlumniInput(
+            new_name, new_gender_str, new_age_str, new_batch_str,
+            new_num, new_qq, new_email);
+        if (!error_msg.empty()) {
+            return;   // 校验不通过，保持对话框
+        }
+
+        char gender = new_gender_str[0];
+        unsigned int age = std::stoi(new_age_str);
+        unsigned int batch = std::stoi(new_batch_str);
 
         Alumni newData(new_name, gender, age, batch,
             new_department, new_class, new_addr, new_num, new_qq, new_email);
 
-        if (is_edit_mode && edit_index >= 0 && edit_index < (int)alumniList.size()) {
-            alumniList[edit_index] = newData;
+        if (is_edit_mode && edit_index >= 0 && edit_index < alumniList.size()) {
+            alumniList.set(edit_index, newData);     // ★ set
         } else {
             alumniList.push_back(newData);
         }
@@ -129,6 +139,7 @@ int main() {
 
     auto cancel_btn = Button("取消", [&] {
         clearInputs();
+        error_msg.clear();
         show_dialog = false;
         is_edit_mode = false;
         edit_index = -1;
@@ -151,14 +162,14 @@ int main() {
         if (visible.empty()) {
             return vbox({
                 filler(),
-                text("暂无校友数据，按 n 或 New 添加") | dim | center,
+                text("暂无校友数据，按  New 添加") | dim | center,
                 filler(),
             }) | flex;
         }
 
         Elements card_elements;
         for (size_t vi = 0; vi < visible.size(); vi++) {
-            auto& a = alumniList[visible[vi]];
+            auto& a = alumniList.at(visible[vi]);            // ★ at()
             auto content = vbox({
                 text("姓名：" + a.getName()) | bold,
                 text("性别：" + std::string(a.getGender() == 'm' ? "m" : "f")),
@@ -209,6 +220,10 @@ int main() {
                     hbox({text("电话：") | size(WIDTH, EQUAL, 10), num_input->Render() | flex}),
                     hbox({text("QQ　：") | size(WIDTH, EQUAL, 10), qq_input->Render() | flex}),
                     hbox({text("邮箱：") | size(WIDTH, EQUAL, 10), email_input->Render() | flex}),
+                    // ★ 校验错误提示行
+                    error_msg.empty()
+                        ? text("")
+                        : text("✗ " + error_msg) | color(Color::Red) | center,
                     separator(),
                     hbox({
                         confirm_btn->Render() | flex,
@@ -255,6 +270,7 @@ int main() {
         if (show_dialog) {
             if (event == Event::Escape) {
                 clearInputs();
+                error_msg.clear();
                 show_dialog = false;
                 is_edit_mode = false;
                 edit_index = -1;
@@ -291,13 +307,14 @@ int main() {
                 int realIndex = visible[selected];
                 is_edit_mode = true;
                 edit_index = realIndex;
-                fillInputs(alumniList[realIndex]);
+                error_msg.clear();                       // ★ 清空提示
+                fillInputs(alumniList.at(realIndex));    // ★ at()
                 show_dialog = true;
                 return true;
             }
             if (event == Event::Character('d')) {
                 int realIndex = visible[selected];
-                alumniList.erase(alumniList.begin() + realIndex);
+                alumniList.erase(realIndex);             // ★ erase(index)
                 saveToFile(alumniList, DATA_FILE);  // ★ 删除后保存
                 if (selected >= (int)visible.size() - 1 && selected > 0)
                     selected--;
